@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Maria Scent</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      padding-top: 60px;
+    }
+
+    .login-container {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .logo {
+      font-weight: bold;
+    }
+
+    .logo span:first-child {
+      color: #000; /* "Maria" em preto */
+    }
+
+    .logo span:last-child {
+      color: #bfa14a; /* "Scent" em dourado */
+    }
+
+    .slogan {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 8px #bfa14a;
+      border-color: #bfa14a;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #bfa14a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #a88f3c;
+      transform: scale(1.05);
+    }
+
+    .link {
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .link a {
+      color: #bfa14a;
+      text-decoration: none;
+    }
+
+    .forgot {
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    .forgot a {
+      color: #bfa14a;
+      text-decoration: none;
+    }
+    /* --- ADIÇÕES PARA LOGIN SOCIAL E TOGGLE SENHA --- */
+
+/* Container para o input e o ícone de toggle */
+.input-container {
+    position: relative;
+    /* Alinha com a margem do input normal */
+    margin-bottom: 16px; 
+}
+
+.input-container input {
+    /* Reseta a margem inferior para que o input-container a controle */
+    margin-bottom: 0; 
+}
+
+/* Botão de Mostrar Senha (Toggle) */
+.toggle-password {
+    position: absolute;
+    right: 15px; /* Posição à direita */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666; /* Cor do ícone */
+    width: auto; /* Não precisa de largura 100% */
+    padding: 0;
+    transition: color 0.3s;
+}
+
+.toggle-password:hover {
+    color: #bfa14a;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* --- ESTILOS DE LOGIN SOCIAL FINAIS (Limpo, Bloco Lado a Lado e Hover de Marca) --- */
+
+/* Separador "Ou entre com" */
+.social-login-separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 30px 0 20px;
+    color: #999; 
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.social-login-separator hr {
+    flex-grow: 1;
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin: 0 15px;
+}
+
+/* Container de Botões: Horizontal (Lado a Lado) */
+.social-buttons {
+    display: flex;
+    justify-content: space-between; 
+    gap: 8px; 
+    margin-bottom: 20px;
+}
+
+/* Estilo Base do Botão Social (Blocos) */
+.social-btn {
+    flex-grow: 1; 
+    width: auto; 
+    padding: 10px 0; 
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    color: #333; /* Texto escuro padrão */
+    transition: all 0.2s ease; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Sombra leve */
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ícone dentro do botão */
+.social-btn i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+/* --- CORES DE ÍCONES --- */
+
+/* Google: Simulação de Cores Clássicas */
+.google-btn i { 
+    /* Esta técnica usa gradiente para simular o multicolorido */
+    background: -webkit-linear-gradient(135deg, #4285f4 25%, #ea4335 25%, #ea4335 50%, #fbbc05 50%, #fbbc05 75%, #34a853 75%);
+    background: linear-gradient(135deg, #4285f4 25%, #ea4335 25%, #ea4335 50%, #fbbc05 50%, #fbbc05 75%, #34a853 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 19px; 
+} 
+
+/* Facebook */
+.facebook-btn i { color: #4267b2; } 
+/* Twitter/X */
+.twitter-btn i { color: #000000; } /* Cor do ícone X (Preto) */
+/* Apple ID */
+.apple-btn i { color: #000000; } /* Cor do ícone Apple (Preto) */
+
+
+/* --- EFEITOS DE HOVER (Cor de Fundo/Borda de Marca) --- */
+
+/* 1. GOOGLE HOVER: Borda e Fundo leves com a cor de marca (Azul Google) */
+.google-btn:hover {
+    border-color: #4285f4; /* Azul Google */
+    background-color: #e8f0fe; /* Fundo azul bem leve */
+}
+
+/* 2. FACEBOOK HOVER: Borda e Fundo leves com a cor de marca (Azul Facebook) */
+.facebook-btn:hover {
+    border-color: #4267b2; /* Azul Facebook */
+    background-color: #e6e9f2; /* Fundo azul bem leve */
+    color: #4267b2; /* Texto azul no hover */
+}
+
+/* 3. TWITTER / X HOVER: Borda e Fundo com a cor da marca (Preto) */
+.twitter-btn:hover {
+    border-color: #000000; /* Preto X */
+    background-color: #eeeeee; /* Fundo cinza leve */
+    color: #000000; /* Texto preto no hover */
+}
+
+/* 4. APPLE ID HOVER: Borda e Fundo com a cor da marca (Preto) */
+.apple-btn:hover {
+    border-color: #000000; /* Preto Apple */
+    background-color: #eeeeee; /* Fundo cinza leve */
+    color: #000000; /* Texto preto no hover */
+} </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2 class="logo"><span>Maria</span> <span>Scent</span></h2>
+    <p class="slogan">Sinta a essência que transforma seu dia ✨</p>
+ <form id="form-login">
+  <input type="email" id="email" placeholder="E-mail" required>
+
+  <div class="input-container">
+    <input type="password" id="senha" placeholder="Senha" required>
+    <button type="button" id="toggle-senha" class="toggle-password">
+      <i class="fas fa-eye-slash"></i> 
+    </button>
+  </div>
+
+  <button type="submit" id="btn-login">Login</button>
+</form>
+<div class="social-login-separator">
+  <hr>
+  <span>Ou entre com</span>
+  <hr>
+</div>
+
+<div class="social-buttons">
+  <button type="button" class="social-btn google-btn">
+    <i class="fab fa-google"></i> Google
+  </button>
+  <button type="button" class="social-btn facebook-btn">
+    <i class="fab fa-facebook-f"></i> Facebook
+  </button>
+  <button type="button" class="social-btn twitter-btn">
+    <i class="fab fa-twitter"></i> Twitter
+  </button>
+  <button type="button" class="social-btn apple-btn">
+    <i class="fab fa-apple"></i> Apple 
+  </button>
+</div>
+
+    <div class="forgot">
+      <p><a href="recuperar.html">Esqueceu sua senha?</a></p>
+    </div>
+    <div class="link">
+      <p>Não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
+    </div>
+  </div>
+<script src="js/login.js"></script>
+</body>
+</html>

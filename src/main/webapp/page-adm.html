@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel Administrativo | Maria Scent</title>
+    <link rel="stylesheet" href="css/adm.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <button class="close-btn" id="menu-close">&times;</button>
+            <h2 class="logo">Maria <span class="logo-scent">Scent</span></h2>
+            <nav class="menu">
+                <a href="#modulo-dashboard" class="ativo"><i class="fas fa-home"></i> Início</a>
+                <a href="#modulo-adicionar-produto"><i class="fas fa-plus-circle"></i> Produtos</a>
+                <a href="#modulo-pedidos"><i class="fas fa-receipt"></i> Pedidos</a>
+                <a href="#modulo-estoque"><i class="fas fa-cubes"></i> Estoque</a>
+                <a href="#modulo-promocoes"><i class="fas fa-bullhorn"></i> Marketing</a>
+                <a href="#modulo-banner"><i class="fas fa-image"></i> Banners</a>
+                <a href="#modulo-cupons"><i class="fas fa-ticket-alt"></i> Cupons</a>
+                <a href="#modulo-relatorios"><i class="fas fa-chart-line"></i> Relatórios</a>
+                <div class="menu-divider"></div>
+                <a href="#" id="logout-sidebar" class="text-danger"><i class="fas fa-sign-out-alt"></i> Sair do Sistema</a>
+                <a href="index.html" class="btn-voltar"><i class="fas fa-arrow-left"></i> Voltar ao Site</a>
+            </nav>
+        </aside>
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- CONTEÚDO -->
+        <main>
+            <header class="admin-header">
+                <button class="menu-btn" id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <div class="admin-info">
+                    <span id="boas-vindas-admin">Olá, Administrador!</span>
+                </div>
+            </header>
+
+            <!-- 1. DASHBOARD -->
+            <section id="modulo-dashboard" style="display:block;">
+                <h2>Visão Geral</h2>
+                <div class="cards-superior">
+                    <div class="card"><h3>Vendas Hoje</h3><p id="vendas-hoje">R$ 0,00</p></div>
+                    <div class="card"><h3>Produtos</h3><p id="produtos-cadastrados">0</p></div>
+                    <div class="card"><h3>Venda Total</h3><p id="venda-total">R$ 0,00</p></div>
+                    <div class="card"><h3>Pendentes</h3><p id="pedidos-pendentes">0</p></div>
+                    <div class="card metric-card"><h3>Estoque Baixo</h3><p class="metric-value" id="estoque-baixo-valor">0</p>
+                        <div class="estoque-detalhe-container"><div id="estoque-baixo-detalhes"></div></div>
+                    </div>
+                    <div class="card"><h3>Rentabilidade</h3><p id="rentabilidade-mensal">R$ 0,00</p></div>
+                </div>
+                <div class="card-grande" style="margin-top: 30px;">
+                    <h3>Fluxo de Caixa</h3>
+                    <div style="height:300px; width:100%;"><canvas id="grafico-caixa"></canvas></div>
+                </div>
+            </section>
+
+            <!-- 2. PRODUTOS -->
+            <section id="modulo-adicionar-produto">
+                <h2>Gerenciar Produtos</h2>
+                <div class="card-grande">
+                    <form id="form-produto" enctype="multipart/form-data">
+                        <div class="form-group"><label>Nome:</label><input type="text" name="nome" required></div>
+                        <div class="form-group"><label>Linha:</label><input type="text" name="linha" required></div>
+                        <div class="form-group"><label>Categoria:</label>
+                            <select name="categoria" required>
+                                <option value="feminino">Feminino</option>
+                                <option value="masculino">Masculino</option>
+                                <option value="unissex">Unissex</option>
+                                <option value="infantil">Infantil</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Preço (R$):</label><input type="number" name="preco" step="0.01" required></div>
+                        <div class="form-group"><label>Custo (R$):</label><input type="number" name="custo_unitario" step="0.01" placeholder="Opcional"></div>
+                        <div class="form-group"><label>Estoque Inicial:</label><input type="number" name="estoque" min="0" required></div>
+                        <div class="form-group"><label>Descrição:</label><textarea name="descricao" rows="3"></textarea></div>
+                        <div class="form-group">
+                            <label>Imagem (Arquivo):</label>
+                            <input type="file" name="imagem_file" accept="image/*">
+                        </div>
+                        <div class="checkbox-group">
+                             <label><input type="checkbox" name="destaque"> Destaque</label>
+                             <label><input type="checkbox" name="promocao"> Promoção</label>
+                             <label><input type="checkbox" name="exibir_index"> Home</label>
+                             <label><input type="checkbox" name="exibir_page1"> Pág 1</label>
+                             <label><input type="checkbox" name="exibir_page2"> Pág 2</label>
+                        </div>
+                        <button type="submit" class="btn-primary" style="margin-top:20px;">Salvar Produto</button>
+                        <button type="button" id="btn-cancelar-edicao-produto" style="display:none; margin-top:20px; background:#999; border:none; padding:12px 20px; border-radius:6px; cursor:pointer; color:white;">Cancelar</button>
+                    </form>
+                </div>
+                <div class="card-grande">
+                    <h3>Lista de Produtos</h3>
+                    <ul id="lista-produtos" class="lista-admin"></ul>
+                </div>
+            </section>
+
+            <!-- 3. PEDIDOS -->
+            <section id="modulo-pedidos">
+                <h2>Pedidos Recentes</h2>
+                <div class="card-grande">
+                    <div class="tabela-container-mobile">
+                        <table class="tabela-admin">
+                            <thead><tr><th>ID</th><th>Cliente</th><th>Total</th><th>Status</th><th>Ações</th></tr></thead>
+                            <tbody id="lista-pedidos-body"></tbody>
+                        </table>
+                    </div>
+                    <p id="pedidos-nenhum" style="display:none; text-align:center; padding:20px; color:#777;">Nenhum pedido pendente.</p>
+                </div>
+            </section>
+
+            <!-- 4. ESTOQUE -->
+            <section id="modulo-estoque">
+                <h2>Movimentação de Estoque</h2>
+                <div class="card-grande">
+                    <form id="form-estoque">
+                        <div class="form-group"><label>Produto:</label><select id="estoque-produto-id" name="produto_id" required></select></div>
+                        <div class="form-group"><label>Quantidade:</label><input type="number" name="quantidade" min="1" required></div>
+                        <div class="form-group"><label>Tipo:</label>
+                            <select name="tipo_movimentacao"><option value="entrada">Entrada (+)</option><option value="saida">Saída (-)</option></select>
+                        </div>
+                        <div class="form-group"><label>Motivo/Obs:</label><input type="text" name="observacao"></div>
+                        <button type="submit" class="btn-primary">Registrar</button>
+                    </form>
+                </div>
+                <div class="card-grande">
+                    <h3>Saldo Atual</h3>
+                    <div class="tabela-container-mobile">
+                        <table class="tabela-admin">
+                            <thead><tr><th>ID</th><th>Produto</th><th>Qtd</th><th>Ações</th></tr></thead>
+                            <tbody id="lista-estoque"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. MARKETING -->
+            <section id="modulo-promocoes">
+                <h2>Marketing</h2>
+                <div class="card-grande">
+                    <h3>Disparo de Ofertas</h3>
+                    <form id="form-disparo-massivo">
+                        <div class="marketing-canais">
+                            <label class="canal-opcao">
+                                <input type="checkbox" name="canal" value="whatsapp" checked>
+                                <div class="canal-card">
+                                    <div class="canal-icon"><i class="fab fa-whatsapp"></i></div>
+                                    <div class="canal-texto"><h4>WhatsApp</h4><p>Envio Direto</p></div>
+                                </div>
+                            </label>
+                            <label class="canal-opcao">
+                                <input type="checkbox" name="canal" value="email">
+                                <div class="canal-card">
+                                    <div class="canal-icon"><i class="fas fa-envelope"></i></div>
+                                    <div class="canal-texto"><h4>E-mail</h4><p>Newsletter</p></div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Mensagem:</label>
+                            <textarea id="msg-promocao" rows="4" placeholder="Escreva sua oferta..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary"><i class="fas fa-paper-plane"></i> Enviar Campanha</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 6. BANNERS -->
+            <section id="modulo-banner">
+                <h2>Banners</h2>
+                <div class="card-grande">
+                    <form id="form-banner">
+                        <input type="hidden" id="banner-id">
+                        <div class="form-group"><label>Mensagem:</label><input type="text" id="mensagem" name="mensagem" required></div>
+                        <div class="form-group"><label>Início:</label><input type="datetime-local" id="data_inicio" name="data_inicio"></div>
+                        <div class="form-group"><label>Fim:</label><input type="datetime-local" id="data_fim" name="data_fim"></div>
+                        <div class="form-group"><label>Prioridade:</label><input type="number" id="prioridade" name="prioridade" value="0"></div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="ativo" name="ativo" checked> <span>Banner Ativo</span>
+                        </div>
+                        <button type="submit" id="btn-salvar-banner" class="btn-primary" style="margin-top:20px;">Salvar</button>
+                        <button type="button" id="btn-cancelar-edicao" style="display:none; margin-top:20px; margin-left:10px; background:#999; border:none; padding:12px 20px; color:white; border-radius:6px;">Cancelar</button>
+                    </form>
+                    <ul id="lista-banners" class="lista-admin" style="margin-top:20px;"></ul>
+                </div>
+            </section>
+            
+            <!-- 7. CUPONS -->
+            <section id="modulo-cupons">
+                <h2>Cupons</h2>
+                <div class="card-grande">
+                    <form id="form-cupom">
+                        <input type="hidden" id="cupom-id">
+                        <div class="form-group"><label>Código:</label><input type="text" id="codigo" name="codigo" required></div>
+                        <div class="form-group"><label>Tipo:</label><select id="tipo_desconto" name="tipo_desconto"><option value="percentual">%</option><option value="fixo">R$</option></select></div>
+                        <div class="form-group"><label>Valor:</label><input type="number" id="valor_desconto" name="valor_desconto" step="0.01" required></div>
+                        <div class="form-group"><label>Validade:</label><input type="datetime-local" id="data_validade" name="data_validade"></div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="ativo_cupom" name="ativo_cupom" checked> <span>Ativo</span>
+                        </div>
+                        <button type="submit" id="btn-salvar-cupom" class="btn-primary" style="margin-top:20px;">Salvar</button>
+                        <button type="button" id="btn-cancelar-edicao-cupom" style="display:none; margin-top:20px; margin-left:10px; background:#999; border:none; padding:12px 20px; color:white; border-radius:6px;">Cancelar</button>
+                    </form>
+                    <ul id="lista-cupons" class="lista-admin" style="margin-top:20px;"></ul>
+                </div>
+            </section>
+            
+            <!-- 8. RELATÓRIOS -->
+            <section id="modulo-relatorios">
+                <h2>Relatórios</h2>
+                <div class="card-grande">
+                    <form id="form-relatorio">
+                        <div class="form-group"><label>Data Início:</label><input type="date" name="data_inicio" required></div>
+                        <div class="form-group"><label>Data Fim:</label><input type="date" name="data_fim" required></div>
+                        <button type="submit" class="btn-primary">Gerar Relatório de Vendas e Estoque</button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODAL HISTÓRICO / RELATÓRIO -->
+    <div id="modal-historico" class="modal-overlay">
+        <div class="modal-content">
+            <span id="modal-historico-fechar" class="modal-fechar">&times;</span>
+            <h2 id="modal-historico-titulo" style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-top: 0;">Relatório</h2>
+            <div id="modal-historico-corpo" style="margin-top: 20px; max-height: 400px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- BIBLIOTECAS ESSENCIAIS PARA O RELATÓRIO FUNCIONAR -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    
+    <script src="js/adm.js"></script>
+</body>
+</html>

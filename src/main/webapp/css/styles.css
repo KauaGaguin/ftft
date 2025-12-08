@@ -1,0 +1,1860 @@
+/* =========================================================
+   VARIÁVEIS GLOBAIS (:ROOT)
+   ========================================================= */
+:root {
+  --cor-principal: #bfa14a;        /* Dourado Claro */
+  --cor-principal-hover: #a88f3c;  /* Dourado Escuro */
+  --cor-titulos: #1c1c1c;          /* Preto quase total */
+  --cor-texto: #333;               /* Cinza escuro */
+  --cor-fundo: #FDFDFD;            /* Off-white */
+  --cor-branco: #fff;
+  --cor-cinza-claro: #f9f9f9;
+  --cor-borda: #ccc;
+  --fonte-padrao: 'Poppins', sans-serif;
+}
+
+/* RESET GLOBAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style-type: none;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* ARQUIVO: styles.css */
+
+body {
+  background-color: var(--cor-fundo);
+  font-family:  var(--fonte-padrao);
+  color: var(--cor-texto);
+  
+  /* CORREÇÃO BODY: Remove espaço extra abaixo do rodapé */
+  padding-bottom: 0; 
+  
+  overflow-x: hidden;
+  transition: padding-top 0.3s ease;
+}
+
+/* BANNER ANIMATION (Geral) */
+@keyframes fadeBanner {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideFrase {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* =========================================================
+   ANIMAÇÃO TEXTO DO BANNER (Sinta. Escolha. Encante.)
+   ========================================================= */
+@keyframes aparecerTexto {
+  from {
+    opacity: 0;
+    transform: translateY(30px); /* Começa mais embaixo */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* Termina no lugar certo */
+  }
+}
+
+/* NAVBAR E MENU */
+.menu-list {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 100px;
+  background-color: var(--cor-fundo);
+  z-index: 1000;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family:  var(--fonte-padrao);
+}
+
+.nav-bar {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px; 
+}
+
+.nav-left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-grow: 1; 
+    gap: 15px; 
+}
+.nav-center {
+    flex-grow: 0;
+    flex-shrink: 0;
+    text-align: center;
+    line-height: 1.1; 
+}
+
+.nav-right {
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    flex-grow: 1; 
+    gap: 10px; 
+}
+
+/* LOGO ORIGINAL */
+.main-banner {
+  width: 180px;
+  height: auto;
+  font-family: 'Gilda Display', serif;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.2;
+  color: var(--cor-titulos);
+  margin-top: 10px;
+}
+
+/* DESTAQUE “Scent” */
+.banner {
+  color: var(--cor-principal);
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  color: var(--cor-texto);
+  transition: transform 0.2s ease;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+  color: var(--cor-principal);
+}
+
+/* =========================================================
+   MENU LATERAL - ÁREA DE FILTRO
+   ========================================================= */
+.menu-filtro-container {
+    padding: 20px 0 10px 0;
+    text-align: right; /* Alinha tudo à direita como o menu original */
+}
+
+.menu-filtro-container h4 {
+    font-family: var(--fonte-padrao);
+    font-size: 0.9rem;
+    color: #999;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.filtro-botoes {
+    display: flex;
+    flex-direction: column; /* Botões um embaixo do outro */
+    align-items: flex-end; /* Alinhados à direita */
+    gap: 8px;
+}
+
+.filtro-botoes button {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    font-size: 0.85rem;
+    color: var(--cor-titulos);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: fit-content;
+}
+
+.filtro-botoes button:hover {
+    border-color: var(--cor-principal);
+    color: var(--cor-principal);
+    background-color: #f9f9f9;
+}/* =========================================================
+   MENU CATEGORIAS & FILTROS (PAINEL LATERAL UNIFICADO)
+   ========================================================= */
+
+/* O Painel (Escondido na esquerda) */
+.submenu-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 350px;        /* Largura elegante no Desktop */
+    max-width: 85vw;     /* Não quebra no celular */
+    height: 100vh;
+    background-color: #fff;
+    z-index: 4000;       /* Acima de tudo */
+    
+    transform: translateX(-100%); /* Escondido para a esquerda */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    
+    box-shadow: 5px 0 25px rgba(0,0,0,0.1); /* Sombra suave na direita */
+    display: flex;
+    flex-direction: column;
+    padding: 0; /* Padding controlado internamente */
+}
+
+/* Classe para abrir */
+.submenu-panel.show {
+    display: flex; /* Garante display */
+    transform: translateX(0); /* Desliza para dentro */
+}
+
+/* Cabeçalho do Menu */
+.submenu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #f0f0f0;
+    background-color: #f9f9f9;
+}
+.submenu-header h3 {
+    font-family: var(--fonte-padrao);
+    font-size: 1.1rem;
+    color: var(--cor-titulos);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.close-submenu {
+    background: none; border: none; font-size: 1.5rem;
+    color: var(--cor-titulos); cursor: pointer; padding: 5px;
+    position: static; /* Remove posicionamento absoluto antigo */
+}
+
+/* Área de Filtros */
+.menu-filtro-container {
+    padding: 25px;
+    background-color: #fff;
+}
+.menu-filtro-container h4 {
+    font-size: 0.85rem; color: #999; text-transform: uppercase;
+    margin-bottom: 15px; letter-spacing: 1px; font-weight: 600;
+}
+
+.filtro-botoes {
+    display: flex; flex-direction: column; gap: 10px;
+}
+.filtro-botoes button {
+    width: 100%;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    color: var(--cor-texto);
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: left; /* Texto alinhado a esquerda fica mais chique */
+    display: flex; align-items: center; gap: 10px;
+    transition: all 0.2s;
+}
+.filtro-botoes button i { color: #ccc; width: 20px; text-align: center; }
+
+.filtro-botoes button:hover {
+    border-color: var(--cor-principal);
+    color: var(--cor-principal);
+    background-color: #fbfbfb;
+}
+.filtro-botoes button:hover i { color: var(--cor-principal); }
+
+/* Lista de Links */
+.submenu-lista {
+    list-style: none; padding: 0 25px; margin-top: 10px;
+}
+.submenu-lista li {
+    border-bottom: 1px solid #f5f5f5;
+}
+.submenu-lista a {
+    display: block;
+    padding: 15px 0;
+    font-size: 1rem;
+    color: var(--cor-titulos);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.submenu-lista a:hover {
+    color: var(--cor-principal);
+    padding-left: 5px; /* Efeito visual de movimento */
+}
+
+/* Backdrop Escuro (Fundo preto quando abre) */
+#overlay-categorias {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); z-index: 3999;
+    opacity: 0; visibility: hidden; transition: all 0.3s;
+}
+#overlay-categorias.show { opacity: 1; visibility: visible; }
+
+/* =========================================================
+   BARRA DE FILTROS DESKTOP (DIOR STYLE)
+   ========================================================= */
+
+.desktop-filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px 40px; /* Espaçamento lateral */
+    background-color: #fff;
+    border-bottom: 1px solid #e5e5e5; /* Linha fina embaixo */
+    position: sticky; /* Opcional: Gruda no topo ao rolar */
+    top: 100px; /* Ajuste conforme altura do seu header */
+    z-index: 900;
+}
+
+/* ESQUERDA: ORDENAR */
+.filter-sort-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-right: 1px solid #e5e5e5; /* Divisória vertical */
+    padding-right: 20px;
+    margin-right: 20px;
+    min-width: 220px;
+}
+
+.sort-label {
+    font-size: 0.9rem;
+    color: #777;
+    white-space: nowrap;
+}
+
+/* Estilizando o Select para parecer texto limpo */
+.custom-select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.custom-select-wrapper select {
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    background: transparent;
+    font-family: var(--fonte-padrao);
+    font-size: 0.95rem;
+    color: var(--cor-titulos);
+    font-weight: 600;
+    padding-right: 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+.custom-select-wrapper i {
+    position: absolute;
+    right: 0;
+    font-size: 0.7rem;
+    pointer-events: none;
+    color: #333;
+}
+
+/* DIREITA: LISTA DE TAGS (PÍLULAS) */
+.filter-tags-scroll {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow-x: auto; /* Permite rolar se tiver muitos */
+    white-space: nowrap;
+    scrollbar-width: none; /* Esconde barra de rolagem Firefox */
+    padding-bottom: 2px;
+}
+.filter-tags-scroll::-webkit-scrollbar { display: none; } /* Esconde barra Chrome */
+
+.filter-pill {
+    display: inline-block;
+    padding: 8px 18px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5; /* Borda cinza clara */
+    border-radius: 4px; /* Cantos levemente arredondados (retângulo) */
+    
+    font-family: var(--fonte-padrao);
+    font-size: 0.85rem;
+    color: #333;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-pill:hover {
+    border-color: #000; /* Borda preta ao passar o mouse */
+    background-color: #f9f9f9;
+}
+/* =========================================================
+   DROPDOWN CUSTOMIZADO (ESTILO DIOR)
+   ========================================================= */
+
+.dior-custom-dropdown {
+    position: relative; /* Para a lista flutuar em relação a ele */
+    font-family: var(--fonte-padrao);
+    min-width: 140px;
+}
+
+/* O Botão Principal (Texto + Seta) */
+.dropdown-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+    
+     font-family: var(--fonte-padrao);
+    font-size: 0.95rem;
+    color: var(--cor-texto); /* Preto/Escuro */
+    font-weight: 500;
+    padding: 5px 0;
+}
+
+.dropdown-trigger i {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+/* Quando o menu está aberto, a setinha gira */
+.dior-custom-dropdown.active .dropdown-trigger i {
+    transform: rotate(180deg);
+}
+
+/* A Lista de Opções (Escondida por padrão) */
+.dropdown-options {
+    position: absolute;
+    top: 100%; /* Logo abaixo do botão */
+    left: -15px; /* Um leve ajuste para alinhar */
+    margin-top: 10px;
+    
+    background-color: #fff;
+    min-width: 180px;
+    padding: 10px 0;
+    
+    border: 1px solid #eee;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* Sombra elegante */
+    border-radius: 4px;
+    
+    list-style: none;
+    z-index: 1000;
+    
+    /* Animação de entrada */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Quando ativa, aparece */
+.dior-custom-dropdown.active .dropdown-options {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Itens da Lista */
+.dropdown-options li {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    color: #555;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-family: var(--fonte-padrao);
+}
+
+/* Hover nos Itens (Cinza Dior) */
+.dropdown-options li:hover {
+    background-color: #f5f5f5;
+    color: var(--cor-principal); /* Dourado no hover */
+}
+/* =========================================================
+   CONTROLE DE EXIBIÇÃO (MOBILE VS DESKTOP)
+   ========================================================= */
+
+/* NO CELULAR (Telas menores que 1024px): ESCONDE A BARRA DIOR */
+@media (max-width: 1024px) {
+    .desktop-filter-bar {
+        display: none !important;
+    }
+    
+    /* Garante que o menu hamburguer apareça */
+    .navbar-media {
+        display: block !important;
+    }
+}
+
+/* NO COMPUTADOR (Telas maiores que 1024px): ESCONDE O MENU HAMBURGUER DE CATEGORIAS */
+@media (min-width: 1025px) {
+    .navbar-media {
+        display: none !important;
+    }
+    
+    /* A Barra Dior aparece automaticamente pelo display flex lá em cima */
+}
+
+/* =========================================================
+   VITRINE PREMIUM (ESTILO DIOR) - ÍCONES EMBAIXO E INVERTIDOS
+   ========================================================= */
+
+/* 1. Container da Vitrine */
+.vitrine-produtos {
+    padding: 60px 5%;
+    background-color: #fff;
+}
+
+.vitrine-produtos h2 { display: none; }
+
+/* 2. O Grid */
+.grid-produtos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 40px 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 3. O Card do Produto */
+.card-produto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+/* 4. Área da Imagem */
+.img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    background-color: #F5F5F5;
+    margin-bottom: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 30px;
+    transition: transform 0.5s ease;
+    mix-blend-mode: multiply;
+}
+
+.card-produto:hover .img-wrapper img {
+    transform: scale(1.08);
+}
+
+/* 5. Ícones (AGORA EMBAIXO E INVERTIDOS) */
+
+/* Botão Wishlist (Coração) - AGORA NA ESQUERDA EMBAIXO */
+.btn-wishlist {
+    position: absolute;
+    bottom: 40px; /* <--- MUDANÇA: Moveu para baixo */
+    left: 35px;   /* <--- MUDANÇA: Moveu para a esquerda */
+    background: transparent;
+    border: none;
+    font-size: 1.4rem; /* Um pouco maior no desktop */
+    color: #ccc;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0; /* Escondido até passar o mouse no desktop */
+    transition: all 0.3s ease;
+}
+
+/* Botão Carrinho (Sacola) - AGORA NA DIREITA EMBAIXO */
+.btn-quick-add {
+    position: absolute;
+    bottom: 40px; /* <--- MUDANÇA: Moveu para baixo */
+    right: 35px;  /* <--- MUDANÇA: Moveu para a direita */
+    background: transparent;
+    border: none;
+    font-size: 1.3rem;
+    color: var(--cor-titulos);
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0; /* Escondido até passar o mouse no desktop */
+    transition: all 0.3s ease;
+}
+
+/* Mostra ícones ao passar o mouse no card (Desktop) */
+.card-produto:hover .btn-quick-add,
+.card-produto:hover .btn-wishlist {
+    opacity: 1;
+}
+
+/* Wishlist Ativa (Coração Vermelho) */
+.btn-wishlist.active {
+    color: #ff4d4d;
+    opacity: 1 !important;
+}
+.btn-wishlist.active i { font-weight: 900; }
+
+/* Hover nos ícones */
+.btn-quick-add:hover { transform: scale(1.2); color: var(--cor-principal); }
+.btn-wishlist:hover { transform: scale(1.2); }
+
+/* 6. Tipografia e Detalhes */
+.card-produto h3 {
+    font-family: var(--fonte-padrao);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #111;
+    margin: 5px 0;
+    letter-spacing: 0.5px;
+}
+
+.card-size { font-size: 0.8rem; color: #888; margin-bottom: 5px; }
+.card-rating { color: #bfa14a; font-size: 0.7rem; margin-bottom: 10px; }
+
+.card-short-desc {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.4;
+    max-width: 90%;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-price {
+    font-family: var(--fonte-padrao);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111;
+    margin-top: auto;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+}
+.card-produto:hover .card-price { border-color: #111; }
+
+/* =========================================================
+   AJUSTE MOBILE (ACESSIBILIDADE DOS ÍCONES)
+   ========================================================= */
+@media (max-width: 768px) {
+    .grid-produtos { grid-template-columns: repeat(2, 1fr); gap: 20px 10px; }
+    .img-wrapper { height: 220px; }
+
+    /* <--- MUDANÇA: ÍCONES GRANDES PARA TOQUE NO CELULAR ---> */
+    .btn-quick-add, .btn-wishlist {
+        opacity: 1; /* Sempre visíveis no celular */
+        font-size: 1.8rem; /* Ícones BEM maiores visualmente */
+        padding: 15px; /* Área de toque generosa e invisível em volta */
+        
+        /* Ajuste fino da posição para compensar o tamanho extra */
+        bottom: 5px; 
+    }
+    .btn-wishlist { left: 5px; }
+    .btn-quick-add { right: 5px; }
+}
+
+/* =========================================================
+   PAINEL LATERAL (CARRINHO E CONTA) - VERSÃO FINAL
+   ========================================================= */
+
+/* 1. O Painel Principal (A Gaveta) */
+#menu-oculto {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    height: calc(100vh - 40px); /* Altura da tela menos margens */
+    
+    /* Largura Controlada */
+    width: 380px;        /* Tamanho fixo elegante no PC */
+    max-width: 90vw;     /* No celular, ocupa quase tudo */
+    
+    background-color: var(--cor-branco);
+    z-index: 3000;
+    
+    /* Animação */
+    transform: translateX(150%);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    
+    /* Layout Flex Vertical */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Nada sai das bordas arredondadas */
+}
+
+#menu-oculto.ativo {
+    transform: translateX(0);
+    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5); /* Fundo escuro */
+}
+
+/* 2. Cabeçalho do Painel (Botão X e Abas) */
+.painel-header {
+    flex-shrink: 0; /* Nunca encolhe */
+}
+
+#menu-oculto .btn-menu-close {
+    display: block;
+    margin: 15px 0 0 20px;
+    background: none; border: none; font-size: 1.5rem;
+    cursor: pointer; color: var(--cor-titulos);
+}
+
+.painel-tabs {
+    display: flex;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    margin-top: 10px;
+}
+
+.painel-tabs button {
+    flex: 1; padding: 15px; background: none; border: none;
+     font-family: var(--fonte-padrao); font-weight: 600; color: #aaa;
+    cursor: pointer; transition: all 0.3s; border-bottom: 3px solid transparent;
+}
+
+.painel-tabs button.active {
+    color: var(--cor-titulos);
+    border-bottom-color: var(--cor-principal);
+}
+
+/* 3. O Slider que troca entre Conta e Carrinho */
+#painel-slider {
+    display: flex;
+    width: 200%;   /* Cabe os dois painéis */
+    height: 100%;  /* Ocupa a altura restante */
+    transition: transform 0.4s ease;
+    overflow: hidden; /* Garante que não tenha scroll horizontal */
+}
+
+/* 4. Configuração Genérica dos Painéis Internos */
+.painel-interno {
+    width: 50%;       /* Metade do slider */
+    height: 100%;     /* Altura total */
+    display: flex; 
+    flex-direction: column;
+    padding: 0; 
+    flex-shrink: 0;   /* CRUCIAL: Não deixa esmagar */
+}
+
+/* Lista de Produtos (Onde o Scroll Acontece) */
+#itens-carrinho-scroll {
+    flex: 1;            /* Ocupa todo o espaço livre no meio */
+    overflow-y: auto;   /* Scroll vertical aqui */
+    min-height: 0;      /* OBRIGATÓRIO para o flex funcionar */
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Rodapé Fixo do Carrinho */
+#carrinho-botoes-wrapper {
+    flex-shrink: 0;     /* CRUCIAL: Nunca empurre isso para fora */
+    width: 100%;
+    padding: 20px 25px;
+    background-color: var(--cor-branco);
+    border-top: 1px solid #eee;
+    z-index: 10;
+    box-sizing: border-box;
+    display: flex; flex-direction: column; gap: 15px;
+}
+
+/* Estilos visuais do Carrinho */
+.cart-empty { text-align: center; color: #999; margin-top: 50px; }
+.cart-empty i { font-size: 2rem; opacity: 0.3; display: block; margin: 10px auto; }
+
+#carrinho-lista { width: 100%; padding: 0; margin: 0; list-style: none; }
+
+.item-carrinho {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; padding: 15px 0; border-bottom: 1px solid #f5f5f5;
+}
+.item-info { flex: 1; min-width: 0; text-align: left; padding-right: 10px; } /* Texto quebra linha */
+.item-info h4 { margin: 0 0 5px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Totais e Botões */
+.cart-total-linha { display: flex; justify-content: space-between; font-size: 0.95rem; color: #666; }
+.cart-total-linha.destaque {
+  padding: 12px; 
+    font-size: 1.2rem; font-weight: 700; color: var(--cor-titulos); 
+    margin-top: 10px; padding-top: 10px; border-top: 1px dashed #eee; 
+}
+
+.btn-finalizar {
+    width: 100%; padding: 15px; background: var(--cor-titulos); color: #fff;
+    border: none; border-radius: 8px; font-weight: 600; text-transform: uppercase; cursor: pointer;
+}
+.btn-finalizar:hover { background-color: var(--cor-principal); }
+
+/* =========================================================
+   ESTILO DOS BOTÕES SECUNDÁRIOS (Limpar / Continuar)
+   ========================================================= */
+
+/* Container para ficarem lado a lado */
+.acoes-secundarias {
+    display: flex;
+    gap: 15px;       /* Espaço entre os botões */
+    width: 100%;
+    margin-top: 15px;
+    position: relative;
+    z-index: 50;     /* Garante que o container esteja acima de tudo */
+}
+
+.btn-limpar, .btn-cart-close {
+    flex: 1;         /* Ocupa 50% do espaço cada */
+    
+    /* DEFINIÇÃO DE ESTRUTURA BLINDADA */
+    display: block;  /* Remove flex interno que causa o bug */
+    width: 100%;     /* Força largura total da área disponível */
+    height: 45px;    /* Altura fixa para garantir a área de clique */
+    line-height: 40px; /* Centraliza o texto verticalmente (altura - borda) */
+    
+    padding: 0;      /* Sem padding, usamos height/line-height */
+    margin: 0;       /* Remove margens fantasmas */
+    
+    /* ESTILO VISUAL */
+    background-color: transparent;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    
+    /* TIPOGRAFIA */
+   font-family: var(--fonte-padrao);
+    font-size: 0.70rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center; /* Garante texto no meio */
+    color: #666;
+    
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    /* GARANTIA DE CLIQUE */
+    position: relative;
+    z-index: 100;    /* O botão fica acima de qualquer sombra ou overlay */
+}
+
+/* Hover: Botão Limpar (Vira Vermelho) */
+.btn-limpar:hover {
+    border-color: #ff4d4d;
+    color: #ff4d4d;
+    background-color: #fff5f5; /* Fundo levemente avermelhado */
+}
+
+/* Hover: Botão Continuar (Vira Dourado/Principal) */
+.btn-cart-close:hover {
+    border-color: var(--cor-principal);
+    color: var(--cor-principal);
+    background-color: #f9f9f9;
+}
+
+/* =========================================================
+   ESTILO DO CUPOM DE DESCONTO
+   ========================================================= */
+.cupom-area {
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #eee; /* Linha pontilhada separando */
+}
+
+.cupom-area label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cor-titulos);
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.cupom-wrapper { display: flex; gap: 8px; }
+
+.cupom-wrapper input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+ font-family: var(--fonte-padrao);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+.cupom-wrapper input:focus { border-color: var(--cor-principal); }
+
+.btn-cupom {
+    padding: 0 20px;
+    background-color: var(--cor-titulos);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.btn-cupom:hover { background-color: var(--cor-principal); }
+
+.msg-feedback {
+    font-size: 0.8rem; margin-top: 5px; height: 15px; text-align: left;
+}
+.msg-sucesso { color: green; }
+.msg-erro { color: red; }
+
+.cart-total-linha.desconto { color: green; font-weight: 500; }
+/* =========================================================
+   ESTILO DO PAINEL DE CONTA (LOGIN TOPO / CADASTRO FUNDO)
+   ========================================================= */
+
+/* --- ESTRUTURA DA CONTA --- */
+#account-panel {
+    padding: 40px 25px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--fonte-padrao); /* Mudado para Poppins */
+}
+
+/* Container que empurra os conteúdos para os extremos */
+.conta-conteudo {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around; /* A MÁGICA: Um no topo, um no fundo */
+    height: 100%;
+    width: 100%;
+}
+
+/* Blocos de conteúdo */
+.conta-secao,.conta-secao-login {
+    text-align: center;
+}
+.conta-secao{
+background-color:var(--cor-cinza-claro);
+border-radius: 12px;
+padding: 12px 12px;
+margin-top: 180px;
+}
+/* Títulos (Fonte Poppins, Negrito e Maiúsculo) */
+.painel-interno h4 {
+    font-weight: 700;
+    font-size: 1.1rem; 
+    color: var(--cor-titulos);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+/* Textos (Fonte Poppins, Cinza e Delicado) */
+.painel-interno  p {
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    padding: 0 5px;
+}
+
+/* A Linha do meio agora é invisível para limpar o visual */
+.conta-divider {
+    display: none; 
+}
+
+/* --- BOTÕES --- */
+
+/* Botão Login (Preto) */
+.btn-login-full {
+    display: block;
+    width: 90px;
+    padding: 14px;
+    background-color: var(--cor-titulos);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.80rem;
+    letter-spacing: 1px;
+    border: 1px solid var(--cor-titulos);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  margin-left: 120px;
+}
+
+.btn-login-full:hover {
+    background-color: var(--cor-principal);
+    border-color: var(--cor-principal);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Botão Cadastro (Borda) */
+.btn-cadastro-full {
+    display: block;
+    width: 190px;
+    padding: 14px;
+    background-color: transparent;
+    color: var(--cor-titulos);
+    font-family: var(--fonte-padrao);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    margin-left: 70px;
+}
+
+.btn-cadastro-full:hover {
+    border-color: var(--cor-titulos);
+    background-color: #f9f9f9;
+    color: #000;}
+/* =========================================================
+   ELEMENTOS GLOBAIS
+   ========================================================= */
+.banner-fixo {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  overflow: hidden;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.imagem-banner {
+  position: absolute;
+  bottom: -100px;
+  right: 5%;
+  width: 30%;
+  height: auto;
+  z-index: 8;
+}
+
+.degrade-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #FDFDFD, #E5E5E5);
+  z-index: 2;
+}
+
+.texto-banner {
+  position: relative;
+  z-index: 3;
+  color: var(--cor-texto);
+  padding-left: 190px;
+  padding-top: 180px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* --- ALTERAÇÃO AQUI: ANIMAÇÃO DE APARECER UM POR UM --- */
+.texto-banner h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin: 0;
+  opacity: 0; /* Invisível por padrão */
+  animation: aparecerTexto 1s ease forwards; /* Aplica a animação */
+}
+
+/* Atrasos para cada linha */
+.texto-banner h1:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.texto-banner h1:nth-child(2) {
+  animation-delay: 1.2s;
+}
+
+.texto-banner h1:nth-child(3) {
+  animation-delay: 2.2s;
+}
+/* ----------------------------------------------------- */
+
+.banner-destaque { color: var(--cor-principal); }
+
+.close-submenu {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: var(--cor-principal);
+  cursor: pointer;
+  transition: color 0.3s, transform 0.2s;
+  z-index: 10001;
+}
+
+.close-submenu:hover {
+  color: var(--cor-texto);
+  transform: scale(1.2);
+}
+/* =========================================================
+   ÍCONES DO CABEÇALHO (ESTILO PREMIUM)
+   ========================================================= */
+
+/* Container dos ícones (ajuste o gap se achar muito grudado) */
+.nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px; /* Espaço entre os botões */
+}
+
+/* O Botão do Ícone */
+.icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    
+    /* Tamanho fixo para garantir alinhamento */
+    width: 45px; 
+    height: 45px;
+    
+    /* Centraliza o ícone perfeitamente dentro do quadrado */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Estilo do Ícone */
+    font-size: 1.3rem; /* Tamanho visual do desenho */
+    color: var(--cor-texto);
+    
+    /* Acabamento */
+    border-radius: 50%; /* Faz o hover ser uma bolinha */
+    transition: all 0.3s ease;
+}
+
+/* Efeito Hover: Fundo cinza claro sutil (muito usado em luxo) */
+.icon-btn:hover {
+    background-color: #f5f5f5; /* Fundo sutil */
+    color: var(--cor-titulos); /* Escurece o ícone */
+    transform: translateY(-1px); /* Leve subida elegante */
+}
+
+
+
+/* Ajuste para Mobile */
+@media (max-width: 768px) {
+    .icon-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+}
+/* BUSCA */
+.search-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 190px;
+  width: 0;
+  opacity: 0;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 2px solid var(--cor-principal);
+  border-radius: 0;
+  outline: none;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  z-index: 1001;
+  transition: width 0.4s ease, opacity 0.4s ease;
+  box-shadow: 0 0 0 transparent;
+  pointer-events: none;
+}
+
+.search-label.show {
+  width: 220px;
+  opacity: 1;
+  box-shadow: none; 
+  pointer-events: auto;
+}
+
+.search-label:focus {
+    border-bottom-color: var(--cor-principal-hover);
+}
+/* =========================================================
+   MENU HAMBÚRGUER (Lateral Esquerda - Estilo Flutuante)
+   ========================================================= */
+#menu-panel {
+    position: fixed;
+    /* Margens iguais em cima, esquerda e baixo (Efeito Flutuante) */
+    top: 20px;
+    left: 20px; 
+    height: calc(100vh - 40px); /* Altura total menos as margens */
+    
+    width: 85vw;
+    max-width: 300px;
+    
+    background-color: var(--cor-branco);
+    z-index: 3000;
+    
+    /* Estado inicial: Escondido para fora da tela (esquerda) */
+    /* -150% garante que ele saia totalmente da tela, já que tem margem */
+    transform: translateX(-150%);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    
+    /* Arredonda TODOS os cantos para parecer um quadrado/cartão */
+    border-radius: 20px;
+    
+    /* Sombra suave no próprio menu */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Quando aberto (.show) */
+#menu-panel.show {
+    transform: translateX(0); /* Volta para a posição original (left: 20px) */
+    
+    /* Sombra gigante para escurecer o fundo do site */
+    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5); 
+}
+
+/* Botão Fechar (X) */
+.btn-menu-close {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--cor-titulos);
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding: 15px;
+    transition: color 0.3s;
+}
+.btn-menu-close:hover { color: var(--cor-principal-hover); }
+
+/* Linha Divisória */
+.menu-divider {
+    border: 0;
+    height: 1px;
+    background-color: #eee;
+    margin: 15px 0;
+    width: 100%;
+}
+
+/* Lista de Links */
+.menu-hamburguer {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.menu-hamburguer li {
+    padding: 0;
+    border: none;
+}
+
+.menu-hamburguer a {
+    color: var(--cor-texto);
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    padding: 12px 0;
+    transition: padding-left 0.3s, color 0.3s;
+}
+
+.menu-hamburguer a:hover {
+    color: var(--cor-principal);
+    padding-left: 8px;
+}
+/* BANNER PROMOCIONAL (Topo) */
+.banner-promocional {
+  background: linear-gradient(90deg, var(--cor-principal), var(--cor-principal-hover));
+  color: var(--cor-branco);
+  padding: 14px 24px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1100;
+  animation: fadeBanner 0.5s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.banner-texto {
+    animation: slideFrase 0.6s ease-in-out; 
+    transition: opacity 0.5s ease-in-out;
+}
+
+body.banner-ativo {
+  top: 400px;
+}
+
+/* RODAPÉ */
+.rodape {
+  background-color: #f8f8f8;
+  border-top: 4px solid var(--cor-principal);
+  padding: 40px 20px;
+   font-family:  var(--fonte-padrao);
+  color: var(--cor-texto);
+}
+
+.container-final {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 40px;
+}
+
+.promocoes-whatsapp {
+  flex: 1;
+  max-width: 300px;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 40px;
+}
+
+.promocoes-whatsapp label {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--cor-titulos);
+}
+
+.promocoes-whatsapp input[type="tel"] {
+  width: 80%;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+  margin-bottom: 16px;
+}
+
+.promocoes-whatsapp button {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: var(--cor-principal);
+  color: var(--cor-branco);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+    font-family:  var(--fonte-padrao);
+}
+
+.lojas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 10px;
+}
+
+.servicos, .termos {
+  flex: 1;
+  min-width: 200px;
+  padding: 20px;
+  margin: 10px;
+}
+
+.redes-sociais {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.redes-sociais a {
+  font-size: 24px;
+  color: var(--cor-texto);
+  transition: color 0.3s;
+}
+
+.redes-sociais a:hover {
+  color: var(--cor-principal);
+}
+.servicos h3,
+.termos h3{
+  color: var(--cor-principal);
+  margin-bottom: 12px;
+    font-family:  var(--fonte-padrao);
+}
+.servicos h4,
+.termos h4 {
+  margin-bottom: 12px;
+    font-family:  var(--fonte-padrao);
+}
+
+.promocoes-whatsapp button:hover {
+  background-color: var(--cor-principal-hover);
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(191, 161, 74, 0.4);
+}
+.promocoes-whatsapp:focus-within .caixa-wpp {
+  color: var(--cor-principal);
+  transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+/* OUTROS LAYOUTS */
+.grid-produtos { 
+    display: flex; 
+    overflow-x: auto; 
+    gap: 20px; 
+    padding-bottom: 20px;
+    scrollbar-width: none; 
+}
+.grid-produtos::-webkit-scrollbar {
+    display: none; 
+}
+.grid-produtos .card-produto {
+    flex: 0 0 280px; 
+    box-sizing: border-box;
+}
+
+.grid-produtos-grande {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 30px; 
+    padding: 0 20px; 
+}
+
+h1 {
+  font-family: 'Gilda Display', serif;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+/* MODAL PRODUTO ESTILO LUXO */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-container {
+    background: var(--cor-branco);
+    width: 90%;
+    max-width: 1000px;
+    height: 80vh;
+    display: flex;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.modal-body {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-img {
+    flex: 1.2;
+    background: #f4f4f4;
+    height: 100%;
+}
+.modal-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-info {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.modal-info h2 {
+    font-family: 'Gilda Display', serif;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.modal-price {
+    font-size: 1.5rem;
+    color: var(--cor-principal);
+    margin-bottom: 20px;
+}
+
+.size-selector {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0 30px;
+}
+.size-btn {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    background: var(--cor-branco);
+    cursor: pointer;
+}
+.size-btn.active {
+    border-color: #000;
+    background: #000;
+    color: var(--cor-branco);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+.btn-full {
+    flex: 1;
+    padding: 15px;
+}
+
+/* RESPONSIVO — MOBILE */
+@media (max-width: 768px) {
+  .menu-desktop {
+    display: none;
+  }
+
+  .menu-btn {
+    display: flex;
+    font-size: 22px;
+  }
+
+  .menu-toggle {
+    display: flex;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px;
+    background: none;
+    border: none;
+    color: var(--cor-texto);
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+
+  .submenu-panel {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--cor-branco);
+    z-index: 9999;
+    padding: 20px 24px;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  .submenu-panel.show {
+    display: block;
+  }
+
+  .submenu-panel ul {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 12px;
+  }
+
+  .submenu-panel ul li {
+    width: 100%;
+    text-align: right;
+    border-bottom: 1px solid #eee;
+  }
+
+  .submenu-panel ul li a {
+    display: block;
+    color: var(--cor-principal);
+    font-size: 18px;
+    font-weight: 500;
+    padding: 16px 0;
+    transition: color 0.3s;
+  }
+
+  .submenu-panel ul li a:hover {
+    color: var(--cor-texto);
+  }
+
+  .close-submenu {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--cor-principal);
+    cursor: pointer;
+    transition: color 0.3s, transform 0.2s;
+    z-index: 10001;
+  }
+
+  .close-submenu:hover {
+    color: var(--cor-texto);
+    transform: scale(1.2);
+  }
+
+  .nav-bar {
+    padding: 0 12px;
+  }
+
+  .nav-left,
+  .nav-right {
+    gap: 8px;
+  }
+
+  .nav-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  .navbardown {
+    display: none;
+  }
+
+  .navbar-media {
+    display: block;
+    margin-top: 0;
+    background: #eee;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+
+  .fundo-img {
+    background: linear-gradient(90deg, #fff, #EAEAEA);
+    height: auto;
+    min-height: 180px;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .main-banner {
+    width: 160px;
+  }
+
+  .first-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    left: 0;
+    top: 60px;
+  }
+
+  .container-img {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    flex-direction: row;
+    flex: 1;
+    padding: 0;
+    top: -140px;
+    left: 20px;
+    height: 120px;
+  }
+
+  .img-principal {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+  }
+
+  .texto-destaque {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin-top: -30px;
+  }
+
+  .texto-destaque h1 {
+    font-size: 1.6rem;
+    max-width: 100%;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .produtos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px 20px;
+  }
+
+  .produto-perfumes-masculinos {
+    width: 45%;
+    margin-bottom: 30px;
+  }
+
+  .img-wrapper {
+    width: 100%;
+    height: auto;
+  }
+
+  .img-product {
+    width: 100%;
+    height: auto;
+  }
+
+  .container-final {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .lojas {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .servicos,
+  .termos {
+    width: 100%;
+    text-align: start;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .servicos h3,
+  .termos h3 {
+    font-size: 16px;
+    margin-bottom: 18px;
+  }
+
+  .servicos h4,
+  .termos h4 {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .redes-sociais {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 5px;
+  }
+
+  .redes-sociais a {
+    margin: 10px;
+  }
+
+  .promocoes-whatsapp {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px 10px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    width: 100%;
+    margin-left: 5px;
+  }
+
+  .promocoes-whatsapp label {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--cor-texto);
+    text-align: start;
+    width: 100%;
+  }
+
+  .promocoes-whatsapp input {
+    width: 100%;
+    height: 56px;
+    padding: 0 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid var(--cor-principal);
+    border-radius: 8px;
+    outline: none;
+    color: var(--cor-texto);
+    background-color: var(--cor-branco);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
+  }
+
+  .promocoes-whatsapp input:focus {
+    border-color: var(--cor-principal-hover);
+    box-shadow: 0 0 0 2px rgba(191, 161, 74, 0.3);
+  }
+
+  .promocoes-whatsapp button {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: var(--cor-principal);
+    color: var(--cor-branco);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  .promocoes-whatsapp button:hover {
+    background-color: var(--cor-principal-hover);
+    transform: scale(1.03);
+  }
+
+  .search-label {
+    top: 100%;
+    right: 0;
+    transform: none;
+    margin-top: 8px;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .search-label.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .search-label.hide {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  /* Mobile Modal */
+  .modal-body { flex-direction: column; }
+  .modal-img { height: 40%; }
+  .modal-container { height: 90vh; }
+}

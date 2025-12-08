@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pedido Confirmado</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    .mensagem {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="mensagem">✅ Seu pedido foi confirmado com sucesso!</div>
+  <p>Você será redirecionado para a loja em instantes...</p>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 5000); // 5 segundos
+  </script>
+</body>
+</html>

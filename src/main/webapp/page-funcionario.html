@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel Operacional | Maria Scent</title>
+    <link rel="stylesheet" href="css/funcionario.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <button class="close-btn" id="menu-close">&times;</button>
+            <h2 class="logo">Maria <span class="logo-scent">Scent</span></h2>
+            <nav class="menu">
+                <a href="#modulo-dashboard" class="ativo"><i class="fas fa-home"></i> Início</a>
+                <a href="#modulo-pedidos"><i class="fas fa-receipt"></i> Pedidos</a>
+                <a href="#modulo-estoque"><i class="fas fa-cubes"></i> Estoque</a>
+                <a href="#modulo-promocoes"><i class="fas fa-bullhorn"></i> Marketing (Ver)</a>
+                <a href="#modulo-relatorios"><i class="fas fa-file-alt"></i> Relatórios</a>
+                
+                <div class="menu-divider"></div>
+                <!-- Logout na Sidebar -->
+                <a href="#" id="logout-sidebar" class="text-danger"><i class="fas fa-sign-out-alt"></i> Sair do Sistema</a>
+                
+                <a href="index.html" class="btn-voltar"><i class="fas fa-arrow-left"></i> Voltar para o site</a>
+            </nav>
+        </aside>
+        
+        <!-- Overlay Mobile -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- CONTEÚDO -->
+        <main>
+            <header class="admin-header">
+                <button class="menu-btn" id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <div class="admin-info">
+                    <span id="boas-vindas-func">Olá, Funcionário!</span>
+                </div>
+            </header>
+
+            <!-- 1. DASHBOARD -->
+            <section id="modulo-dashboard" style="display:block;">
+                <h2>Painel Operacional</h2>
+                <div class="cards-superior">
+                    <div class="card"><h3>Pedidos Pendentes</h3><p id="pedidos-pendentes">0</p></div>
+                    <div class="card"><h3>Produtos Cadastrados</h3><p id="produtos-cadastrados">0</p></div>
+                    <div class="card"><h3>Vendas Hoje</h3><p id="vendas-hoje">R$ 0,00</p></div>
+                    <div class="card metric-card"><h3>Estoque Baixo</h3><p id="estoque-baixo-valor">0</p></div>
+                </div>
+            </section>
+
+            <!-- 2. PEDIDOS -->
+            <section id="modulo-pedidos">
+                <h2>Pedidos Pendentes</h2>
+                <div class="card-grande">
+                    <div class="tabela-container-mobile">
+                        <table class="tabela-admin">
+                            <thead><tr><th>ID</th><th>Cliente</th><th>Total</th><th>Data</th><th>Status</th><th>Ação</th></tr></thead>
+                            <tbody id="lista-pedidos-body"></tbody>
+                        </table>
+                    </div>
+                    <p id="pedidos-nenhum" style="display:none; text-align:center; padding:20px; color:#777;">Nenhum pedido pendente.</p>
+                </div>
+            </section>
+
+            <!-- 3. ESTOQUE -->
+            <section id="modulo-estoque">
+                <h2>Movimentação de Estoque</h2>
+                <div class="card-grande">
+                    <form id="form-movimentacao-estoque">
+                        <div class="form-group"><label>Produto:</label><select id="mov-produto" name="produtoId" required></select></div>
+                        <div class="form-group"><label>Quantidade:</label><input type="number" name="quantidade" min="1" required></div>
+                        <div class="form-group"><label>Tipo:</label>
+                            <select name="tipo">
+                                <option value="entrada">Entrada (+)</option>
+                                <option value="saida">Saída (-)</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Motivo:</label><input type="text" name="motivo" placeholder="Ex: Entrega fornecedor" required></div>
+                        <button type="submit" class="btn-primary">Registrar Movimentação</button>
+                    </form>
+                </div>
+                
+                <div class="card-grande">
+                    <h3>Visão Geral do Estoque</h3>
+                    <div class="tabela-container-mobile">
+                        <table class="tabela-admin">
+                            <thead><tr><th>ID</th><th>Produto</th><th>Qtd Atual</th><th>Status</th></tr></thead>
+                            <tbody id="lista-estoque-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. MARKETING (CUPONS E BANNERS) -->
+            <section id="modulo-promocoes">
+                <h2>Marketing Ativo (Visualização)</h2>
+                
+                <div class="card-grande">
+                    <h3>Banners no Site</h3>
+                    <div class="tabela-container-mobile">
+                        <table class="tabela-admin">
+                            <thead><tr><th>Mensagem</th><th>Prioridade</th><th>Status</th></tr></thead>
+                            <tbody id="lista-banners-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card-grande">
+                    <h3>Cupons Ativos</h3>
+                    <div class="tabela-container-mobile">
+                        <table class="tabela-admin">
+                            <thead><tr><th>Código</th><th>Desconto</th><th>Validade</th><th>Status</th></tr></thead>
+                            <tbody id="lista-cupons-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. RELATÓRIOS -->
+            <section id="modulo-relatorios">
+                <h2>Relatório de Movimentações</h2>
+                <div class="card-grande">
+                    <p style="margin-bottom: 20px; color: #666;">Visualize as últimas 100 movimentações de estoque registradas.</p>
+                    <button id="btn-gerar-relatorio-estoque" class="btn-primary"><i class="fas fa-sync-alt"></i> Atualizar Relatório</button>
+                    <div id="area-relatorio-estoque" style="margin-top: 25px;">
+                        <p style="text-align:center; color:#999;">Clique em atualizar para ver os dados.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/funcionario.js"></script>
+</body>
+</html>

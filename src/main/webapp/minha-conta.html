@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Minha Conta | Maria Scent</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+        --primary: #bfa14a;
+        --primary-hover: #a88f3c;
+        --text: #333;
+        --text-light: #666;
+        --bg: #f8f9fa;
+        --white: #fff;
+        --border: #e9ecef;
+        --danger: #dc3545;
+        --success: #28a745;
+        --shadow: 0 4px 6px rgba(0,0,0,0.04);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    /* --- SIDEBAR --- */
+    .sidebar {
+      width: 280px;
+      background-color: var(--white);
+      border-right: 1px solid var(--border);
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.02);
+    }
+
+    .sidebar-header h2 {
+      font-size: 24px;
+      color: var(--primary);
+      margin: 0 0 30px 0;
+      text-align: center;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+    
+    .user-card {
+        background: linear-gradient(135deg, #fdfbf7 0%, #fff 100%);
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 30px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+    }
+    
+    .user-avatar {
+        width: 70px;
+        height: 70px;
+        background: #fffbf0;
+        border-radius: 50%;
+        margin: 0 auto 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        font-size: 28px;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 8px rgba(191, 161, 74, 0.15);
+    }
+
+    .user-greeting {
+        font-size: 16px;
+        color: var(--text);
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .menu { display: flex; flex-direction: column; gap: 8px; }
+
+    .menu a {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .menu a i { width: 24px; margin-right: 8px; color: #adb5bd; font-size: 16px; transition: color 0.2s; }
+
+    .menu a:hover {
+      background-color: #f8f9fa;
+      color: var(--primary);
+    }
+    
+    .menu a.active {
+      background-color: #fffbf0;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .menu a.active i, .menu a:hover i { color: var(--primary); }
+    
+    .menu-divider { height: 1px; background: var(--border); margin: 15px 0; }
+
+    /* --- CONTEÚDO --- */
+    .content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    .section { display: none; animation: fadeIn 0.4s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 15px;
+    }
+
+    .section h3 { font-size: 22px; color: var(--text); margin: 0; font-weight: 600; }
+
+    /* --- CARDS (Dashboard) --- */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 25px;
+        margin-bottom: 35px;
+    }
+
+    .stat-card {
+        background: var(--white);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        border: 1px solid transparent;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    
+    .stat-card.card-link { cursor: pointer; }
+    .stat-card.card-link:hover { transform: translateY(-5px); border-color: var(--primary); }
+
+    .stat-icon {
+        width: 55px;
+        height: 55px;
+        border-radius: 12px;
+        background: #fffbf0;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }
+
+    .stat-info h4 { margin: 0; font-size: 26px; color: var(--text); font-weight: 700; line-height: 1.2; }
+    .stat-info p { margin: 0; font-size: 13px; color: var(--text-light); }
+
+    /* --- FORMULÁRIOS E BOXES --- */
+    .info-box {
+      background-color: var(--white);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-full { grid-column: 1 / -1; }
+
+    label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 13px; color: var(--text); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Estilos de Validação */
+    input, select {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    
+    input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(191, 161, 74, 0.1); }
+    input[readonly] { background-color: #f9f9f9; color: #777; cursor: not-allowed; }
+    
+    input.input-error { border-color: var(--danger); background-color: #fff8f8; }
+    .error-msg { color: var(--danger); font-size: 12px; margin-top: 5px; display: block; font-weight: 500; }
+
+    .btn {
+      padding: 12px 24px;
+      background-color: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .btn:hover { background-color: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(191, 161, 74, 0.3); }
+    .btn-secondary { background-color: #e9ecef; color: var(--text); }
+    .btn-secondary:hover { background-color: #dee2e6; transform: none; box-shadow: none; }
+    .btn-outline { background: transparent; border: 1px solid #ccc; color: #555; }
+    .btn-outline:hover { border-color: var(--text); color: var(--text); transform: none; box-shadow: none; }
+    .btn-danger { background-color: #dc3545; }
+    .btn-danger:hover { background-color: #c82333; box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3); }
+
+    /* --- TABELAS --- */
+    .table-container { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+    .table-pedidos { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .table-pedidos th { background: #f8f9fa; color: var(--text); font-weight: 600; text-align: left; padding: 15px; border-bottom: 2px solid var(--border); }
+    .table-pedidos td { padding: 15px; border-bottom: 1px solid var(--border); color: #555; }
+    .table-pedidos tr:last-child td { border-bottom: none; }
+    .table-pedidos tr:hover { background-color: #fafafa; }
+    
+    .status-badge { padding: 6px 12px; border-radius: 30px; font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; }
+    .status-pendente { background: #fff3cd; color: #856404; }
+    .status-concluido, .status-entregue { background: #d4edda; color: #155724; }
+    .status-cancelado { background: #f8d7da; color: #721c24; }
+
+    /* --- CARDS DE CONTEÚDO (Endereços/Wishlist) --- */
+    .address-grid, .wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    
+    .card-box {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 25px;
+        position: relative;
+        background: var(--white);
+        transition: 0.3s;
+        display: flex;
+        flex-direction: column;
+    }
+    .card-box:hover { border-color: var(--primary); box-shadow: 0 8px 20px rgba(0,0,0,0.06); transform: translateY(-3px); }
+    
+    .card-tag { position: absolute; top: 15px; right: 15px; background: #f1f3f5; padding: 4px 10px; border-radius: 4px; font-size: 11px; text-transform: uppercase; font-weight: 600; color: #666; }
+    
+    .card-actions { margin-top: auto; padding-top: 15px; display: flex; gap: 10px; }
+
+    /* --- RESPONSIVO --- */
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      .sidebar { width: 100%; padding: 15px; box-sizing: border-box; border-right: none; border-bottom: 1px solid var(--border); }
+      .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .content { padding: 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+        <h2>Maria Scent</h2>
+    </div>
+
+    <div class="user-card">
+        <div class="user-avatar"><i class="fas fa-user"></i></div>
+        <div id="boas-vindas" class="user-greeting">Carregando...</div>
+        <small style="color: #aaa;">Cliente VIP</small>
+    </div>
+
+    <nav class="menu">
+      <a href="#resumo" class="menu-link active" data-target="resumo"><i class="fas fa-home"></i> Painel</a>
+      <a href="#pedidos" class="menu-link" data-target="pedidos"><i class="fas fa-shopping-bag"></i> Meus Pedidos</a>
+      <a href="#wishlist" class="menu-link" data-target="wishlist"><i class="fas fa-heart"></i> Lista de Desejos</a>
+      
+      <div class="menu-divider"></div>
+      
+      <a href="#dados" class="menu-link" data-target="dados"><i class="fas fa-user-cog"></i> Meus Dados</a>
+      <a href="#enderecos" class="menu-link" data-target="enderecos"><i class="fas fa-map-marker-alt"></i> Endereços</a>
+      <a href="#pagamento" class="menu-link" data-target="pagamento"><i class="fas fa-credit-card"></i> Pagamento</a>
+      <a href="#configuracoes" class="menu-link" data-target="configuracoes"><i class="fas fa-bell"></i> Preferências</a>
+      
+      <div class="menu-divider"></div>
+      
+      <a href="index.html"><i class="fas fa-store"></i> Ir para Loja</a>
+      <a href="#" id="logout-link" style="color: #dc3545;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+    </nav>
+  </aside>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="content">
+    
+    <!-- 1. PAINEL / RESUMO -->
+    <div class="section active" id="resumo">
+      <div class="section-header">
+        <h3>Painel do Cliente</h3>
+      </div>
+      
+      <div class="dashboard-grid">
+        <!-- CARD 1: PEDIDOS -->
+        <div class="stat-card card-link" data-target="pedidos">
+            <div class="stat-icon"><i class="fas fa-box-open"></i></div>
+            <div class="stat-info">
+                <h4 id="total-pedidos">0</h4>
+                <p>Pedidos Realizados</p>
+            </div>
+        </div>
+        <!-- CARD 2: AGUARDANDO ENTREGA -->
+        <div class="stat-card card-link" data-target="pedidos">
+            <div class="stat-icon"><i class="fas fa-truck"></i></div>
+            <div class="stat-info">
+                <h4 id="pedidos-caminho">0</h4>
+                <p>Aguardando Entrega</p>
+            </div>
+        </div>
+        <!-- CARD 3: WISHLIST -->
+        <div class="stat-card card-link" data-target="wishlist">
+            <div class="stat-icon"><i class="fas fa-heart"></i></div>
+            <div class="stat-info">
+                <h4 id="total-wishlist">0</h4>
+                <p>Itens na Lista de Desejos</p>
+            </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+          <h4 style="margin-top: 0; margin-bottom: 20px;">Último Pedido</h4>
+          <div id="ultimo-pedido-resumo">
+              <p style="color: #777;">Nenhum pedido recente encontrado.</p>
+          </div>
+      </div>
+    </div>
+
+    <!-- 2. MEUS PEDIDOS -->
+    <div class="section" id="pedidos">
+      <div class="section-header">
+        <h3>Histórico de Compras</h3>
+      </div>
+      <div class="info-box table-container">
+        <div id="lista-pedidos-completa">Carregando...</div>
+      </div>
+    </div>
+
+    <!-- 3. LISTA DE DESEJOS -->
+    <div class="section" id="wishlist">
+        <div class="section-header">
+          <h3>Minha Lista de Desejos</h3>
+        </div>
+        <div class="info-box">
+            <p style="margin-bottom: 20px; color: #666;">Seus produtos favoritos salvos para comprar depois.</p>
+            <div class="wishlist-grid" id="wishlist-container">
+                <!-- JS vai preencher -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. MEUS DADOS (COM VALIDAÇÃO) -->
+    <div class="section" id="dados">
+      <div class="section-header">
+        <h3>Dados Pessoais</h3>
+      </div>
+      <div class="info-box">
+        <form id="form-dados" onsubmit="return false;">
+            <div class="form-grid">
+                <div>
+                    <label>Nome Completo</label>
+                    <input type="text" id="nome" readonly class="input-readonly">
+                </div>
+                <div>
+                    <label>E-mail</label>
+                    <input type="email" id="email" readonly class="input-readonly">
+                </div>
+                <div>
+                    <label>CPF *</label>
+                    <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14">
+                    <small class="error-msg" id="error-cpf"></small>
+                </div>
+                <div>
+                    <label>Data de Nascimento</label>
+                    <input type="date" id="nascimento">
+                </div>
+                <div>
+                    <label>Telefone / WhatsApp *</label>
+                    <input type="text" id="telefone" placeholder="(00) 00000-0000" maxlength="15">
+                    <small class="error-msg" id="error-telefone"></small>
+                </div>
+            </div>
+            <div style="margin-top: 30px;">
+                <button class="btn" id="btn-salvar-dados"><i class="fas fa-save"></i> Atualizar Dados</button>
+            </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 5. ENDEREÇOS -->
+    <div class="section" id="enderecos">
+        <div class="section-header">
+          <h3>Endereços de Entrega</h3>
+          <button class="btn btn-outline" onclick="novoEndereco()"><i class="fas fa-plus"></i> Novo Endereço</button>
+        </div>
+        <div class="address-grid" id="lista-enderecos">
+            <!-- Mockup Inicial -->
+        </div>
+        
+        <!-- Formulário Oculto de Novo Endereço -->
+        <div id="form-novo-endereco" class="info-box" style="display:none; margin-top: 20px; border: 1px solid var(--primary);">
+            <h4 style="margin-top:0;">Adicionar Endereço</h4>
+            <div class="form-grid">
+                <div class="form-full"><label>Apelido (Ex: Casa, Trabalho)</label><input type="text" id="end-apelido"></div>
+                <div><label>CEP *</label><input type="text" id="end-cep" placeholder="00000-000" maxlength="9"><small class="error-msg" id="error-end-cep"></small></div>
+                <div class="form-full"><label>Rua *</label><input type="text" id="end-rua"><small class="error-msg" id="error-end-rua"></small></div>
+                <div><label>Número *</label><input type="text" id="end-numero"><small class="error-msg" id="error-end-numero"></small></div>
+                <div><label>Bairro</label><input type="text" id="end-bairro"></div>
+                <div><label>Cidade</label><input type="text" id="end-cidade"></div>
+                <div><label>Estado</label><input type="text" id="end-uf"></div>
+            </div>
+            <div style="margin-top: 20px; display: flex; gap: 10px;">
+                <button class="btn" onclick="salvarEndereco()">Salvar Endereço</button>
+                <button class="btn btn-secondary" onclick="cancelarEndereco()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. PAGAMENTO -->
+    <div class="section" id="pagamento">
+        <div class="section-header">
+          <h3>Formas de Pagamento</h3>
+          <button class="btn btn-outline" onclick="novoCartao()"><i class="fas fa-plus"></i> Adicionar Cartão</button>
+        </div>
+        <div class="info-box">
+            <div class="address-grid" id="lista-cartoes">
+                <!-- JS Preenche -->
+            </div>
+            
+            <!-- Formulário Oculto de Novo Cartão -->
+            <div id="form-novo-cartao" style="display:none; margin-top: 20px; padding-top:20px; border-top: 1px solid var(--border);">
+                <h4 style="margin-top:0;">Adicionar Novo Cartão</h4>
+                <div class="form-grid">
+                    <div class="form-full"><label>Número do Cartão *</label><input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19"><small class="error-msg" id="error-card-number"></small></div>
+                    <div class="form-full"><label>Nome no Cartão *</label><input type="text" id="card-name" placeholder="Como impresso no cartão"><small class="error-msg" id="error-card-name"></small></div>
+                    <div><label>Validade *</label><input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5"><small class="error-msg" id="error-card-expiry"></small></div>
+                    <div><label>CVV *</label><input type="text" id="card-cvv" placeholder="123" maxlength="4"><small class="error-msg" id="error-card-cvv"></small></div>
+                </div>
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <button class="btn" onclick="salvarCartao()">Salvar Cartão</button>
+                    <button class="btn btn-secondary" onclick="cancelarCartao()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. CONFIGURAÇÕES -->
+    <div class="section" id="configuracoes">
+        <div class="section-header">
+          <h3>Preferências de Comunicação</h3>
+        </div>
+        <div class="info-box">
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; text-transform: none;">
+                    <input type="checkbox" id="pref-email" checked style="width: auto;"> 
+                    <span>Receber e-mails promocionais e ofertas exclusivas.</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; text-transform: none;">
+                    <input type="checkbox" id="pref-whatsapp" checked style="width: auto;"> 
+                    <span>Receber ofertas e novidades via WhatsApp.</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; text-transform: none;">
+                    <input type="checkbox" id="pref-status" checked style="width: auto;"> 
+                    <span>Receber notificações sobre o status dos meus pedidos.</span>
+                </label>
+                
+                <div style="margin-top: 20px;">
+                    <button class="btn" id="btn-salvar-pref">Salvar Preferências</button>
+                </div>
+                
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border);">
+                    <h4 style="color: var(--danger); margin-top: 0;">Zona de Perigo</h4>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Ao excluir sua conta, todos os seus dados e histórico de pedidos serão removidos permanentemente.</p>
+                    <button class="btn btn-danger" onclick="alert('Entre em contato com o suporte para excluir sua conta.')">Solicitar Exclusão da Conta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE DETALHES DO PEDIDO -->
+    <div id="modal-detalhes-pedido" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:1000; justify-content:center; align-items:center; backdrop-filter: blur(2px);">
+        <div style="background:#fff; width:95%; max-width:650px; border-radius:12px; padding:30px; position:relative; max-height:90vh; overflow-y:auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+            <button onclick="document.getElementById('modal-detalhes-pedido').style.display='none'" style="position:absolute; top:20px; right:25px; background:none; border:none; font-size:28px; cursor:pointer; color:#999; transition: color 0.2s;">&times;</button>
+            
+            <h3 style="margin-top:0; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 15px;">
+                Pedido #<span id="modal-pedido-id"></span>
+            </h3>
+
+            <div style="margin-bottom: 25px; display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px; color: #555; margin-top: 15px;">
+                <div><strong>Data:</strong> <span id="modal-data"></span></div>
+                <div><strong>Status:</strong> <span id="modal-status" class="status-badge"></span></div>
+                <div><strong>Rastreio:</strong> <span id="modal-rastreio"></span></div>
+            </div>
+
+            <h4 style="font-size: 16px; margin-bottom: 12px; color: var(--text);">Itens Comprados</h4>
+            <div id="modal-lista-itens" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 25px; border: 1px solid var(--border);">
+                <!-- JS preenche aqui -->
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; border-top: 1px solid var(--border); padding-top: 20px;">
+                <div>
+                    <h4 style="font-size: 14px; margin: 0 0 8px; color: var(--text);">Endereço de Entrega</h4>
+                    <p id="modal-endereco" style="font-size: 13px; color: #666; margin: 0; line-height: 1.5;"></p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="margin: 4px 0; font-size: 13px;">Subtotal: <span id="modal-subtotal"></span></p>
+                    <p style="margin: 4px 0; font-size: 13px;">Frete: <span id="modal-frete"></span></p>
+                    <p style="margin: 4px 0; font-size: 13px;">Desconto: <span id="modal-desconto" style="color: var(--success); font-weight: 500;"></span></p>
+                    <h4 style="margin: 12px 0 0; font-size: 20px; color: var(--primary);">Total: <span id="modal-total"></span></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </main>
+
+  <script src="js/usuario.js"></script> 
+</body>
+</html>

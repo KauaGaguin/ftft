@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link rel="stylesheet" href="css/styles.css" />
+       
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
+
+
+
+    <title>Maria Scent | Perfumes e Essências Exclusivas</title>
+
+</head>
+<body class="corpo">
+    <div id="banner-promocional" class="banner-promocional" style="display:none;">
+  <div class="banner-texto" id="banner-texto">Aproveite frete grátis em compras acima de R$199!</div>
+</div>
+
+   <header class="menu-list">
+    <nav class="nav-bar">
+        <div class="nav-left">
+            <button class="icon-btn menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="user-info-area" class="nav-actions-dynamic">
+                </div>
+        </div>
+
+        <div class="nav-center">
+            <a href="index.html" class="logo-link">
+                <h1 class="main-banner">Maria <br/><span class="banner">Scent</span></h1>
+            </a>
+        </div>
+
+        <div class="nav-right">
+            <button class="icon-btn search-btn"><i class="fas fa-search"></i></button>
+            <input type="text" id="search-label" class="search-label" placeholder="Buscar produto">
+
+            <button class="icon-btn cart-btn" onclick="abrirMenu('carrinho')">
+                <i class="fas fa-shopping-cart"></i>
+               
+            </button>
+        </div>
+    </nav>
+</header>
+
+<div id="menu-oculto">
+  <div class="painel-tabs">
+    <button onclick="abrirMenu('conta')" id="tab-conta">Minha Conta</button>
+    <button onclick="abrirMenu('carrinho')" id="tab-carrinho">Carrinho</button>
+  </div>
+  <div id="painel-slider">
+    <div id="account-panel" class="painel-interno">
+      <h3>Minha Conta</h3>
+      <div id="estadoConta"></div>
+      <button class="btn-account-close">Fechar</button>
+    </div>
+<div id="cart-panel" class="painel-interno">
+    
+    <h3>Carrinho</h3>
+    
+    <div id="itens-carrinho-scroll"> 
+        
+        <div id="carrinho-vazio" class="cart-empty">
+            <p>Você não tem nenhum produto no carrinho.</p>
+        </div>
+
+        <ul id="carrinho-lista" class="cart-items">
+        </ul>
+        
+    </div>
+    <div id="carrinho-botoes-wrapper"> 
+        <div class="cart-total">
+            <span>Total:</span>
+            <span class="cart-total-value" id="carrinho-total">R$ 0,00</span> 
+        </div>
+        <button onclick="finalizarCompra()" class="btn-finalizar">Finalizar compra</button>
+        <button onclick="limparCarrinho()" class="btn-limpar">Limpar Carrinho</button>
+    </div>
+    
+    <button class="btn-cart-close">Continuar comprando</button>
+
+</div>
+   
+
+    <ul class="cart-items" id="carrinho-lista">0
+        </ul>
+    
+    <button class="btn-cart-close">Continuar comprando</button>
+    
+    <div id="carrinho-botoes-wrapper" style="display:none;">
+      <button onclick="finalizarCompra()" class="btn-finalizar">Finalizar compra</button>
+<button onclick="limparCarrinho()" class="btn-limpar">Limpar Carrinho</button>
+    </div>
+</div>
+    <div id="resumo-pedido" class="painel-interno" style="display: none;">
+  <h3>Resumo do Pedido</h3>
+  <div id="pedido-itens"></div>
+  <input type="text" id="endereco-pedido" placeholder="Digite seu endereço completo" required>
+  <button onclick="confirmarPedido()">Confirmar pedido</button>
+  <button onclick="fecharResumo()">Cancelar</button>
+</div>
+  </div>
+</div>
+
+
+<!-- Painel do Menu Hambúrguer -->
+<div id="menu-panel">
+  <button class="btn-menu-close"><i class="fas fa-times"></i></button>
+  <ul class="menu-hamburguer">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="page-1.html">Fragrância Masculina</a></li>
+    <li><a href="page-2.html">Fragrância Feminina</a></li>
+    <li><a href="">Minha Conta</a></li>
+    <li><a href="">Entrega e Devoluções</a></li>
+  </ul>
+</div>
+
+
+<nav class="navbardown">
+    <ul class="menu-desktop">
+        <li class="has-submenu">
+            <button class="menu-toggle">
+                Categorias <i class="fas fa-chevron-down"></i>
+            </button>
+            <ul class="submenu">
+                <li><a href="#">Categoria A</a></li>
+                <li><a href="#">Subcategoria A</a></li>
+                <li><a href="#">Categoria de Tratamento</a></li>
+                <li><a href="#">Categoria A - A</a></li>
+                <li><a href="#">Cuidados Com A Pele</a></li>
+                <li><a href="#">Categoria B</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<nav class="navbar-media">
+  <button class="menu-toggle">Categorias <i class="fas fa-chevron-down"></i></button>
+
+  <div class="submenu-panel" id="categorias-panel">
+    <button class="close-submenu"><i class="fas fa-times"></i></button>
+    <ul>
+      <li><a href="#">Categoria A</a></li>
+      <li><a href="#">Subcategoria A</a></li>
+      <li><a href="#">Categoria de Tratamento</a></li>
+      <li><a href="#">Categoria A - A</a></li>
+      <li><a href="#">Cuidados Com A Pele</a></li>
+      <li><a href="#">Categoria B</a></li>
+    </ul>
+  </div>
+</nav>
+<section class="vitrine-produtos">
+    <h2>Fragrâncias Femininas</h2>
+    <div class="grid-produtos grid-produtos-grande" id="produtos-femininos">
+        </div>
+    <div class="ver-mais" style="display:none;"><i class="fas fa-chevron-right"></i></div>
+</section>
+
+ <footer class="rodape">
+        <div class="container-final">
+            <!-- Formulário de promoções agora vem primeiro -->
+            <div class="promocoes-whatsapp">
+                <label for="numero">Receba promoções pelo WhatsApp:</label>
+                <input type="tel" id="numero" placeholder="Seu número com DDD" />
+                <button onclick="enviarWhatsApp()">Quero receber!</button>
+            </div>
+
+            <!-- Bloco de serviços e termos agora vem depois -->
+            <div class="lojas">
+                <div class="servicos">
+                    <h3 class="titulos-rodape">Serviços ao Cliente</h3>
+                    <h4>Contatos</h4>
+                    <h4>Entregas e Devoluções</h4>
+                    <h4>FAQ</h4>
+                </div>
+
+                <div class="termos">
+                    <h3 class="titulos-rodape">Termos Legais</h3>
+                    <h4>Termos e condições legais</h4>
+                    <h4>Preferências de Cookies</h4>
+                    <h4>Política de Privacidade</h4>
+                    <h4>Condições gerais de venda</h4>
+                </div>
+            </div>
+        </div>
+        <div class="redes-sociais">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://wa.me/+5521998427250" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        
+    </footer>
+ <script src="js/interfase.js"></script> 
+
+<script src="js/routes/integracao_produtos.js"></script>
+<script src="js/routes/integracao_categoria.js"></script>
+<script>
+    // CHAMADA FINAL PARA CARREGAR OS PRODUTOS FEMININOS
+    carregarProdutosPorCategoria('Feminino', 'produtos-femininos');
+</script>
+</body>
+</html>
